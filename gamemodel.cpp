@@ -32,10 +32,12 @@ void GameModel::SetDirection(Snake::Direction dir) {
 }
 
 void GameModel::Restart() {
+    timer_.stop();
     snake_->Restart();
     is_move_blocked_ = false;
     GenerateFood();
     score_ = 0;
+    timer_.start();
     emit GridUpdated(snake_->GetBody(), food_);
     emit ScoreUpdated(score_);
 }
@@ -56,4 +58,20 @@ void GameModel::MoveSnakeSlot() {
     }
     emit GridUpdated(snake_->GetBody(), food_);
     is_move_blocked_ = false;
+}
+
+void GameModel::Pause() {
+    timer_.stop();
+}
+
+void GameModel::Resume() {
+    timer_.start();
+}
+
+void GameModel::TogglePause() {
+    if (timer_.isActive()) {
+        timer_.stop();
+    } else {
+        timer_.start();
+    }
 }

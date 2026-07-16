@@ -14,6 +14,9 @@ public:
     void GenerateFood();
     void SetDirection(Snake::Direction dir);
     void Restart();
+    void Pause();
+    void Resume();
+    void TogglePause();
 signals:
     void GridUpdated(const QList<QPoint>& snake, const QPoint& food);
     void ScoreUpdated(int score);
