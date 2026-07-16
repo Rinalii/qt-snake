@@ -13,6 +13,7 @@ SOURCES += \
     gamewidget.cpp \
     main.cpp \
     mainwindow.cpp \
+    menuwidget.cpp \
     snake.cpp
 
 HEADERS += \
@@ -20,6 +21,7 @@ HEADERS += \
     gamesettings.h \
     gamewidget.h \
     mainwindow.h \
+    menuwidget.h \
     snake.h
 
 # Default rules for deployment.
