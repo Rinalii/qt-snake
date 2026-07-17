@@ -67,21 +67,74 @@ void GameWidget::DrawGrid(QPainter &painter) {
     }
 }
 
+void GameWidget::DrawSegment(QPainter &painter, const QPoint &point, int n, int curr_num, QColor color) {
+    const int cell = GameConfig::Field::CELL_SIZE;
+    // Коэфф. уменьш.: голова – 1.0, хвост – 0.3
+    float scale = 1.0f - 0.7f * (curr_num / float(n - 1));
+    int size = qRound(cell * scale);
+    // Центр ячейки
+    int cx = point.x() * cell + cell / 2;
+    int cy = point.y() * cell + cell / 2;
+    QRect rect(cx - size/2, cy - size/2, size, size);
+
+    painter.setBrush(color);
+    painter.drawRoundedRect(rect, size/4.0, size/4.0);
+}
+
+void GameWidget::DrawEyes(QPainter &painter, const QPoint &point, Snake::Direction dir) {
+    const int cell = GameConfig::Field::CELL_SIZE;
+    int size = qRound(cell * 0.2);
+
+    if(dir == Snake::Direction::UP) {
+        int cx = point.x() * cell + cell / 5;
+        int cy = point.y() * cell + cell / 5;
+        painter.setBrush(Qt::black);
+        painter.drawEllipse(cx, cy, size, size);
+
+        cx = point.x() * cell + 3*cell / 5;
+        cy = point.y() * cell + cell / 5;
+        painter.drawEllipse(cx, cy, size, size);
+    } else if (dir == Snake::Direction::LEFT) {
+        int cx = point.x() * cell + cell / 5;
+        int cy = point.y() * cell + cell / 5;
+        painter.setBrush(Qt::black);
+        painter.drawEllipse(cx, cy, size, size);
+
+        cx = point.x() * cell + cell / 5;
+        cy = point.y() * cell + 3*cell / 5;
+        painter.drawEllipse(cx, cy, size, size);
+    } else if (dir == Snake::Direction::RIGHT) {
+        int cx = point.x() * cell + 3*cell / 5;
+        int cy = point.y() * cell + cell / 5;
+        painter.setBrush(Qt::black);
+        painter.drawEllipse(cx, cy, size, size);
+
+        cx = point.x() * cell + 3*cell / 5;
+        cy = point.y() * cell + 3*cell / 5;
+        painter.drawEllipse(cx, cy, size, size);
+    } else {
+        int cx = point.x() * cell + cell / 5;
+        int cy = point.y() * cell + 3*cell / 5;
+        painter.setBrush(Qt::black);
+        painter.drawEllipse(cx, cy, size, size);
+
+        cx = point.x() * cell + 3*cell / 5;
+        cy = point.y() * cell + 3*cell / 5;
+        painter.drawEllipse(cx, cy, size, size);
+    }
+}
+
 void GameWidget::DrawSnake(QPainter &painter) {
     if (snake_body_.isEmpty()) return;
-    const int cell = GameConfig::Field::CELL_SIZE;
-    painter.setBrush(Qt::green);
     painter.setPen(Qt::NoPen);
+    const int n = snake_body_.size();
 
-    for (int i = 0; i < snake_body_.size(); ++i) {
-        const QPoint &p = snake_body_[i];
-        QRect cellRect(p.x() * cell, p.y() * cell, cell, cell);
-        if (i == 0) {
-            painter.setBrush(Qt::yellow);
-        } else {
-            painter.setBrush(Qt::green);
-        }
-        painter.drawRect(cellRect);
+    DrawSegment(painter, snake_body_[0], n, 0, Qt::green);
+    DrawEyes(painter, snake_body_[0], snake_dir_);
+
+
+    for (int i = 1; i < n; ++i) {
+        DrawSegment(painter, snake_body_[i], n, i, Qt::green);
     }
 }
 
@@ -120,8 +173,9 @@ void GameWidget::keyPressEvent(QKeyEvent *event) {
     model_->SetDirection(dir);
 }
 
-void GameWidget::onGridUpdated(const QList<QPoint>& snake, const QPoint& food) {
+void GameWidget::onGridUpdated(const QList<QPoint>& snake, Snake::Direction dir, const QPoint& food) {
     snake_body_ = snake;
+    snake_dir_ = dir;
     food_ = food;
     update();
 }

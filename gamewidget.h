@@ -20,11 +20,14 @@ protected:
     void resizeEvent(QResizeEvent *event) override; // для центрирования меню
 
 private slots:
-    void onGridUpdated(const QList<QPoint>& snake, const QPoint& food);
+    void onGridUpdated(const QList<QPoint>& snake, Snake::Direction dir, const QPoint& food);
     void onScoreUpdated(int score);
     void onGameFinished(bool win);
 
 private:
+    void DrawSegment(QPainter &painter, const QPoint &point, int n, int curr_num, QColor color);
+    void DrawEyes(QPainter &painter, const QPoint &point, Snake::Direction dir);
+
     void DrawGrid(QPainter &painter);
     void DrawSnake(QPainter &painter);
     void DrawFood(QPainter &painter);
@@ -32,6 +35,7 @@ private:
     GameModel *model_;
     MenuWidget *menu_widget_;
     QList<QPoint> snake_body_;
+    Snake::Direction snake_dir_;
     QPoint food_;
     int score_ = 0;
     bool is_game_over_ = false;
