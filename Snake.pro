@@ -9,20 +9,20 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    gamemodel.cpp \
-    gamewidget.cpp \
-    main.cpp \
-    mainwindow.cpp \
-    menuwidget.cpp \
-    snake.cpp
+    src/gamemodel.cpp \
+    src/gamewidget.cpp \
+    src/main.cpp \
+    src/mainwindow.cpp \
+    src/menuwidget.cpp \
+    src/snake.cpp
 
 HEADERS += \
-    gamemodel.h \
-    gamesettings.h \
-    gamewidget.h \
-    mainwindow.h \
-    menuwidget.h \
-    snake.h
+    src/gamemodel.h \
+    src/gamesettings.h \
+    src/gamewidget.h \
+    src/mainwindow.h \
+    src/menuwidget.h \
+    src/snake.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
