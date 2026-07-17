@@ -21,6 +21,7 @@ public:
 
     bool IsValidDirection(Direction direction) const;
     void SetDirection(Direction direction);
+    Direction GetDirection() const;
 
     QPoint GetHeadNextCoordinate() const;
 

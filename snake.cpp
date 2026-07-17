@@ -61,6 +61,10 @@ void Snake::SetDirection(Direction direction) {
     }
 }
 
+Snake::Direction Snake::GetDirection() const {
+    return direction_;
+}
+
 QPoint Snake::GetHeadNextCoordinate() const {
     const QPoint& curr_coord = body_.first();
     switch(direction_) {
