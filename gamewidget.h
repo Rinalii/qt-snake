@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QList>
 #include <QPoint>
+#include <QLabel>
 #include "gamemodel.h"
 
 #include "menuwidget.h"
@@ -33,6 +34,7 @@ private:
     void DrawFood(QPainter &painter);
 
     GameModel *model_;
+    QLabel *score_label;
     MenuWidget *menu_widget_;
     QList<QPoint> snake_body_;
     Snake::Direction snake_dir_;

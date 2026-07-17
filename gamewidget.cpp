@@ -34,6 +34,27 @@ GameWidget::GameWidget(GameModel *model, QWidget *parent)
                 is_game_over_ = false;
                 update();
             });
+
+    // Создаём лейбл для счёта
+    score_label = new QLabel(this);
+    score_label->setText("Счёт: 0");
+    score_label->setStyleSheet(
+        "color: white;"
+        "font-size: 20px;"
+        "font-weight: bold;"
+        "background: rgba(0, 0, 0, 150);"
+        "padding: 5px 15px;"
+        "border-radius: 10px;"
+        );
+
+    score_label->adjustSize();
+
+    int margin = 10;
+    int x = width() - score_label->width() - margin;
+    int y = margin;
+    score_label->move(x, y);
+    // лейбл поверх всего
+    score_label->raise();
 }
 
 void GameWidget::paintEvent(QPaintEvent *event) {
@@ -50,7 +71,7 @@ void GameWidget::paintEvent(QPaintEvent *event) {
     if (is_game_over_) {
         painter.setPen(Qt::white);
         painter.setFont(QFont("Arial", 20, QFont::Bold));
-        painter.drawText(rect(), Qt::AlignCenter, "GAME OVER");
+        painter.drawText(rect(), Qt::AlignCenter, QString("GAME OVER\nSCORE: %1").arg(score_));
     }
 }
 
@@ -182,7 +203,15 @@ void GameWidget::onGridUpdated(const QList<QPoint>& snake, Snake::Direction dir,
 
 void GameWidget::onScoreUpdated(int score) {
     score_ = score;
-    setWindowTitle(QString("Змейка - Счёт: %1").arg(score));
+    if (score_label) {
+        score_label->setText("Счёт: " + QString::number(score));
+        score_label->adjustSize();
+
+        int margin = 10;
+        int x = width() - score_label->width() - margin;
+        int y = margin;
+        score_label->move(x, y);
+    }
 }
 
 void GameWidget::onGameFinished(bool win) {
