@@ -38,7 +38,7 @@ void GameModel::Restart() {
     GenerateFood();
     score_ = 0;
     timer_.start();
-    emit GridUpdated(snake_->GetBody(), food_);
+    emit GridUpdated(snake_->GetBody(), snake_->GetDirection(), food_);
     emit ScoreUpdated(score_);
 }
 
@@ -56,7 +56,7 @@ void GameModel::MoveSnakeSlot() {
             snake_->MoveToRegularCell(next_coord);
         }
     }
-    emit GridUpdated(snake_->GetBody(), food_);
+    emit GridUpdated(snake_->GetBody(), snake_->GetDirection(), food_);
     is_move_blocked_ = false;
 }
 

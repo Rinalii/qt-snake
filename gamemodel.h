@@ -18,7 +18,7 @@ public:
     void Resume();
     void TogglePause();
 signals:
-    void GridUpdated(const QList<QPoint>& snake, const QPoint& food);
+    void GridUpdated(const QList<QPoint>& snake, Snake::Direction dir, const QPoint& food);
     void ScoreUpdated(int score);
     void GameFinished(bool win);
 private slots:
