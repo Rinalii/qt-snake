@@ -17,6 +17,7 @@ public:
     void Pause();
     void Resume();
     void TogglePause();
+    void Start();
 signals:
     void GridUpdated(const QList<QPoint>& snake, Snake::Direction dir, const QPoint& food);
     void ScoreUpdated(int score);

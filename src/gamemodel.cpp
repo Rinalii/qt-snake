@@ -12,7 +12,7 @@ GameModel::GameModel(QObject *parent)
     is_move_blocked_ = false;
     timer_.setInterval(GameConfig::Timing::INITIAL_INTERVAL_MS);
     connect(&timer_, &QTimer::timeout, this, &GameModel::MoveSnakeSlot);
-    timer_.start();
+    //timer_.start();
 }
 
 void GameModel::GenerateFood() {
@@ -74,4 +74,8 @@ void GameModel::TogglePause() {
     } else {
         timer_.start();
     }
+}
+
+void GameModel::Start() {
+    timer_.start();
 }
