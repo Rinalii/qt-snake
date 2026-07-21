@@ -14,7 +14,8 @@ SOURCES += \
     src/main.cpp \
     src/mainwindow.cpp \
     src/menuwidget.cpp \
-    src/snake.cpp
+    src/snake.cpp \
+    src/startwidget.cpp
 
 HEADERS += \
     src/gamemodel.h \
@@ -22,7 +23,8 @@ HEADERS += \
     src/gamewidget.h \
     src/mainwindow.h \
     src/menuwidget.h \
-    src/snake.h
+    src/snake.h \
+    src/startwidget.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

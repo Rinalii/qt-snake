@@ -8,6 +8,7 @@
 #include "gamemodel.h"
 
 #include "menuwidget.h"
+#include "startwidget.h"
 
 class GameWidget : public QWidget
 {
@@ -15,6 +16,7 @@ class GameWidget : public QWidget
 public:
     explicit GameWidget(GameModel *model, QWidget *parent = nullptr);
     void TogglePause();
+    void StartGame();
 protected:
     void paintEvent(QPaintEvent *event) override;
     void keyPressEvent(QKeyEvent *event) override;
@@ -35,6 +37,7 @@ private:
 
     GameModel *model_;
     QLabel *score_label;
+    StartWidget *start_widget_;
     MenuWidget *menu_widget_;
     QList<QPoint> snake_body_;
     Snake::Direction snake_dir_;

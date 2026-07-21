@@ -18,6 +18,12 @@ GameWidget::GameWidget(GameModel *model, QWidget *parent)
     // Фокус для получения клавиатурных событий
     setFocusPolicy(Qt::StrongFocus);
 
+
+    // Стартовое меню
+    start_widget_ = new StartWidget(this);
+
+    connect(start_widget_, &StartWidget::startClicked, this, &GameWidget::StartGame);
+
     // Создаём меню
     menu_widget_ = new MenuWidget(this);
     menu_widget_->hide(); // по умолчанию скрыто
@@ -242,6 +248,11 @@ void GameWidget::TogglePause() {
     }
 }
 
+void GameWidget::StartGame() {
+    model_->Start();
+    start_widget_->hide();
+}
+
 void GameWidget::resizeEvent(QResizeEvent *event) {
     QWidget::resizeEvent(event);
     if (menu_widget_) {
@@ -249,5 +260,12 @@ void GameWidget::resizeEvent(QResizeEvent *event) {
         int x = (width() - menu_widget_->width()) / 2;
         int y = (height() - menu_widget_->height()) / 2;
         menu_widget_->move(x, y);
+    }
+
+    if (start_widget_) {
+        // Центрируем меню по центру игрового виджета
+        int x = (width() - start_widget_->width()) / 2;
+        int y = (height() - start_widget_->height()) / 2;
+        start_widget_->move(x, y);
     }
 }
